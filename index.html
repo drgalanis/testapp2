@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html ng-app="ModuleMain">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="shortcut icon" href="res/favicon.ico" type="image/x-icon" />
+<title>Ardeco - Inspector</title>
+<link href="styles/kendo.common.min.css" rel="stylesheet">
+<link href="styles/kendo.rtl.min.css" rel="stylesheet">
+<link href="styles/kendo.material.min.css" rel="stylesheet">
+
+<link href="styles/kendo.dataviz.min.css" rel="stylesheet">
+<link href="styles/kendo.dataviz.material.min.css" rel="stylesheet">
+
+<script src="jscripts/jquery.min.js"></script>
+<script src="jscripts/angular.min.js"></script>
+<script src="jscripts/kendo.all.min.js"></script>
+
+</head>
+
+
+
+<body  background="res/bottomtextureuf.jpg">
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<colgroup><col width="350px"/><col width="10px"/><col /><col width="10px"/></colgroup>
+    <tr>
+        <td><canvas id="logoCanvas" width="350px" height="600px"></canvas></td>
+        <td></td>
+        <td>
+            <div id="tabstrip">
+                <ul><li class="k-state-active"></li></ul>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+</table>
+
+
+<script>
+	var canvas = $("#logoCanvas" )[0];
+	var ctx = canvas.getContext("2d");
+	var cnvHeight = $(document).height() - 10;
+	$("#logoCanvas" ).width('350px');
+	$("#logoCanvas" ).height(cnvHeight + 'px');
+	var img1 = loadImage('res/logo.jpg', main);
+	var img2 = loadImage('res/logo_ext.png', main);
+	var imagesLoaded = 0;
+
+	function main() {
+		imagesLoaded += 1;
+		if(imagesLoaded == 2) {
+			ctx.drawImage(img1, 0, 0);
+			ctx.globalAlpha = 1;
+			ctx.drawImage(img2, 0, 200, 350, 400);
+		}
+	}
+
+	function loadImage(src, onload) {
+		var img = new Image();
+		img.onload = onload;
+		img.src = src;
+		return img;
+	}
+
+    var tabStrip = $("#tabstrip").kendoTabStrip({
+        animation: { open: { effects: "fadeIn"} },
+        dataTextField: "text",
+        dataImageUrlField: "imageUrl",
+		contentUrls: [
+                        'ajax/tab1.php',
+                        'ajax/tab2.php',
+                        'ajax/tab3.php',
+                        'ajax/tab4.php'
+                    ],
+        dataSource: [
+            {
+                text: "Projects",
+                imageUrl: "res/project.png",
+            },
+            {
+                text: "Library",
+                imageUrl: "res/library.png",
+            },
+            {
+                text: "System",
+                imageUrl: "res/system.png",
+            },
+            {
+                text: "Sign Out",
+                imageUrl: "res/exit.png",
+                content: ""
+            }            
+        ]
+
+    }).data("kendoTabStrip").select(0);
+
+
+
+
+
+
+
+</script>
+</body>
+
+</html>
